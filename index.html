@@ -7,17 +7,20 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f9f6f2;
+            background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
         }
         .container {
-            background-color: #f4f4f4;
+            background-color: #f9f6f2;
             padding: 20px;
-            width: 600px;
+            max-width: 600px;
+            width: 100%;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: left;
@@ -29,39 +32,53 @@
             margin-bottom: 20px;
         }
         .logo img {
-            max-width: 200px;
+            max-width: 100%;
+            height: auto;
         }
         h1 {
             text-align: center;
             font-size: 24px;
             margin-bottom: 20px;
+            color: #333;
         }
         .button-container {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: stretch;
         }
         .button {
             display: block;
-            width: 100%;
+            width: 97.5%;
             margin: 5px 0;
             padding: 10px;
-            background-color: #e0e0e0;
-            color: black;
+            background-color: #ffffff;
+            color: #333;
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 25px;
             text-align: left;
             font-size: 16px;
+            border: 1px solid #e0e0e0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
         .button:hover {
-            background-color: #c0c0c0;
+            background-color: #f0f0f0;
+            border-color: #ccc;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+            }
+            .button {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="logo">
-            <img src="logo.jpeg" alt="Logo">
+            <img src="logo.png" alt="Logo">
         </div>
         <h1>EMIE GUGLIELMO</h1>
         <div class="button-container">
@@ -71,9 +88,9 @@
             <a href="pdfs/aps.pdf" class="button">III – APS</a>
             <a href="pdfs/apd.pdf" class="button">IV – APD</a>
             <a href="pdfs/ape.pdf" class="button">V – APE</a>
-            <a href="pdfs/visuel_3d.pdf" class="button">VI– VISUEL 3D</a>
-            <a href="pdfs/pieces_ecrites.pdf" class="button">VII– PIÈCES ÉCRITES</a>
-            <a href="pdfs/maquettes.pdf" class="button">VIII– MAQUETTES</a>
+            <a href="pdfs/pieces_ecrites.pdf" class="button">VI– PIÈCES ÉCRITES </a>
+            <a href="pdfs/maquettes.pdf" class="button">VII– MAQUETTES</a>
+            <a href="pdfs/visuel_3d.pdf" class="button">VIII– VISUELS 3D</a>
         </div>
     </div>
 </body>
