@@ -10,31 +10,41 @@ const pdfFiles = [
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open('pdf-cache').then((cache) => {
-            return cache.addAll(pdfFiles.map(file => new Request(file, { mode: 'no-cors' })))
-                .then(() => {
-                    console.log('All files are cached');
-                })
-                .catch((error) => {
-                    console.error('Failed to cache:', error);
-                    pdfFiles.forEach(async (file) => {
-                        try {
-                            const response = await fetch(new Request(file, { mode: 'no-cors' }));
-                            if (!response.ok) {
-                                console.error('Failed to fetch:', file);
-                            }
-                        } catch (fetchError) {
-                            console.error('Fetch error:', file, fetchError);
-                        }
-                    });
-                });
+            // Cache basic resources like index.html and assets here if needed
+            return cache.addAll([
+                './',
+                './index.html',
+                './logo.png',
+                './favicon.ico',
+                // add other assets you want to cache initially
+            ]);
         })
     );
 });
 
 self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request).then((response) => {
-            return response || fetch(event.request);
-        })
-    );
+    const url = new URL(event.request.url);
+    if (url.origin === 'https://firebasestorage.googleapis.com') {
+        event.respondWith(
+            caches.match(event.request).then((cachedResponse) => {
+                if (cachedResponse) {
+                    return cachedResponse;
+                }
+
+                return fetch(event.request).then((networkResponse) => {
+                    return caches.open('pdf-cache').then((cache) => {
+                        cache.put(event.request, networkResponse.clone());
+                        return networkResponse;
+                    });
+                });
+            })
+        );
+    } else {
+        event.respondWith(
+            caches.match(event.request).then((response) => {
+                return response || fetch(event.request);
+            })
+        );
+    }
 });
+
