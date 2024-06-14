@@ -42,6 +42,7 @@
             color: #333;
         }
         .button-container {
+            text-align: left;
             display: flex;
             flex-direction: column;
             align-items: stretch;
@@ -55,7 +56,6 @@
             color: #333;
             text-decoration: none;
             border-radius: 25px;
-            text-align: left;
             font-size: 16px;
             border: 1px solid #e0e0e0;
             transition: background-color 0.3s ease, border-color 0.3s ease;
@@ -65,12 +65,26 @@
             border-color: #ccc;
         }
 
+        .bottom-buttons {
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+        }
+        .bottom-buttons .button {
+            width: 48%;
+            margin: 5px 1%;
+        }
+
         @media (max-width: 600px) {
             h1 {
                 font-size: 20px;
             }
             .button {
                 font-size: 14px;
+            }
+            .bottom-buttons .button {
+                width: 100%;
+                margin: 5px 0;
             }
         }
     </style>
@@ -88,10 +102,24 @@
             <a href="pdfs/aps.pdf" class="button">III – APS</a>
             <a href="pdfs/apd.pdf" class="button">IV – APD</a>
             <a href="pdfs/ape.pdf" class="button">V – APE</a>
-            <a href="pdfs/pieces_ecrites.pdf" class="button">VI– PIÈCES ÉCRITES </a>
-            <a href="pdfs/maquettes.pdf" class="button">VII– MAQUETTES</a>
-            <a href="pdfs/visuel_3d.pdf" class="button">VIII– VISUELS 3D</a>
+            <a href="pdfs/pieces_ecrites.pdf" class="button">VI – PIÈCES ÉCRITES</a>
+            <a href="pdfs/maquettes.pdf" class="button">VII – MAQUETTES</a>
+            <a href="pdfs/visuel_3d.pdf" class="button">VIII – VISUELS 3D</a>
+            <div class="bottom-buttons">
+                <a href="pdfs/panneau_a0.pdf" class="button">PANNEAU A0</a>
+                <a href="pdfs/presentation_oral.pdf" class="button">PRÉSENTATION ORAL</a>
+            </div>
         </div>
     </div>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(function (registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                }).catch(function (error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+        }
+    </script>
 </body>
 </html>
