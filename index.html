@@ -149,7 +149,7 @@
                 const cache = await caches.open('pdf-cache');
                 pdfLinks.forEach(async link => {
                     try {
-                        const response = await fetch(link);
+                        const response = await fetch(link, { mode: 'no-cors' });
                         if (response.ok) {
                             await cache.put(link, response);
                             console.log(`Cached ${link}`);
