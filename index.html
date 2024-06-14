@@ -121,14 +121,27 @@
         </div>
     </div>
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .then(function (registration) {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                }).catch(function (error) {
-                    console.log('Service Worker registration failed:', error);
-                });
-        }
+        const pdfLinks = [
+            'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/analyse.pdf?alt=media&token=361aa40c-bf98-4581-82a1-2e7e32721aeb',
+            'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/demarche_creative.pdf?alt=media&token=553580d9-abdc-4fc5-92fc-a645835e02d5',
+            'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/design.pdf?alt=media&token=870a7d1a-1dfb-443f-8b14-3c9f67666423',
+            'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/aps.pdf?alt=media&token=e69d5387-fa9f-4567-aa38-6584f7c406d3',
+            'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/apd.pdf?alt=media&token=5dd837fb-e71e-41c5-9c86-eabe31efee83',
+            'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/ape.pdf?alt=media&token=439b90e5-337e-4a88-9751-a0e477b550ac',
+            'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/visuel_3d.pdf?alt=media&token=419572fc-44fe-4fad-b294-e286d570fa0f',
+        ];
+
+        window.addEventListener('load', () => {
+            pdfLinks.forEach(link => {
+                fetch(link, { mode: 'no-cors' })
+                    .then(response => {
+                        console.log(`Prefetched ${link}`);
+                    })
+                    .catch(error => {
+                        console.error(`Failed to prefetch ${link}:`, error);
+                    });
+            });
+        });
     </script>
 </body>
 </html>
