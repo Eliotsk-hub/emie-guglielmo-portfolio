@@ -15,7 +15,13 @@ const pdfFiles = [
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open('pdf-cache').then((cache) => {
-            return cache.addAll(pdfFiles);
+            return cache.addAll(pdfFiles.map(file => new Request(file, { cache: 'reload' })))
+                .then(() => {
+                    console.log('All files are cached');
+                })
+                .catch((error) => {
+                    console.error('Failed to cache:', error);
+                });
         })
     );
 });
