@@ -21,6 +21,16 @@ self.addEventListener('install', (event) => {
                 })
                 .catch((error) => {
                     console.error('Failed to cache:', error);
+                    pdfFiles.forEach(async (file) => {
+                        try {
+                            const response = await fetch(new Request(file, { cache: 'reload' }));
+                            if (!response.ok) {
+                                console.error('Failed to fetch:', file);
+                            }
+                        } catch (fetchError) {
+                            console.error('Fetch error:', file, fetchError);
+                        }
+                    });
                 });
         })
     );
