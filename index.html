@@ -92,7 +92,7 @@
 <body>
     <div class="container">
         <div class="logo">
-            <img src="logo.png" alt="Logo">
+            <img src="logo_cut.png" alt="Logo">
         </div>
         <h1>EMIE GUGLIELMO</h1>
         <div class="button-container">
@@ -113,7 +113,7 @@
     </div>
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
+            navigator.serviceWorker.register('service-worker.js')
                 .then(function (registration) {
                     console.log('Service Worker registered with scope:', registration.scope);
                 }).catch(function (error) {
