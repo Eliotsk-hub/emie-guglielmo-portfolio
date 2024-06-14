@@ -10,7 +10,7 @@ const pdfFiles = [
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open('pdf-cache').then((cache) => {
-            return cache.addAll(pdfFiles.map(file => new Request(file, { cache: 'reload' })))
+            return cache.addAll(pdfFiles.map(file => new Request(file, { mode: 'no-cors' })))
                 .then(() => {
                     console.log('All files are cached');
                 })
@@ -18,7 +18,7 @@ self.addEventListener('install', (event) => {
                     console.error('Failed to cache:', error);
                     pdfFiles.forEach(async (file) => {
                         try {
-                            const response = await fetch(new Request(file, { cache: 'reload' }));
+                            const response = await fetch(new Request(file, { mode: 'no-cors' }));
                             if (!response.ok) {
                                 console.error('Failed to fetch:', file);
                             }
