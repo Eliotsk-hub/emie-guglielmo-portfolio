@@ -1,15 +1,10 @@
 const pdfFiles = [
-    'pdfs/analyse.pdf',
-    'pdfs/demarche_creative.pdf',
-    'pdfs/design.pdf',
-    'pdfs/aps.pdf',
-    'pdfs/apd.pdf',
-    'pdfs/ape.pdf',
-    'pdfs/pieces_ecrites.pdf',
-    'pdfs/maquettes.pdf',
-    'pdfs/visuel_3d.pdf',
-    'pdfs/panneau_a0.pdf',
-    'pdfs/presentation_oral.pdf'
+    'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/analyse.pdf?alt=media&token=361aa40c-bf98-4581-82a1-2e7e32721aeb',
+    'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/demarche_creative.pdf?alt=media&token=553580d9-abdc-4fc5-92fc-a645835e02d5',
+    'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/design.pdf?alt=media&token=870a7d1a-1dfb-443f-8b14-3c9f67666423',
+    'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/aps.pdf?alt=media&token=e69d5387-fa9f-4567-aa38-6584f7c406d3',
+    'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/ape.pdf?alt=media&token=439b90e5-337e-4a88-9751-a0e477b550ac',
+    'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/visuel_3d.pdf?alt=media&token=419572fc-44fe-4fad-b294-e286d570fa0f'
 ];
 
 self.addEventListener('install', (event) => {
