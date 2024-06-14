@@ -138,6 +138,10 @@
             'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/apd.pdf?alt=media&token=5dd837fb-e71e-41c5-9c86-eabe31efee83',
             'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/ape.pdf?alt=media&token=439b90e5-337e-4a88-9751-a0e477b550ac',
             'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/visuel_3d.pdf?alt=media&token=419572fc-44fe-4fad-b294-e286d570fa0f',
+            'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/pieces_ecrites.pdf?alt=media&token=sample-token',
+            'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/maquettes.pdf?alt=media&token=sample-token',
+            'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/panneau_a0.pdf?alt=media&token=sample-token',
+            'https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/presentation_oral.pdf?alt=media&token=sample-token'
         ];
 
         async function cachePDFs() {
@@ -145,7 +149,7 @@
                 const cache = await caches.open('pdf-cache');
                 pdfLinks.forEach(async link => {
                     try {
-                        const response = await fetch(link, { mode: 'no-cors' });
+                        const response = await fetch(link);
                         if (response.ok) {
                             await cache.put(link, response);
                             console.log(`Cached ${link}`);
