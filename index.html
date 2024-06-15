@@ -21,15 +21,20 @@
             width: 100%;
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         .container {
             background-color: #f9f6f2;
             padding: 20px;
             max-width: 600px;
-            margin: 0 auto;
+            width: 100%;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: left;
+            margin-bottom: 20px;
         }
         .logo {
             display: flex;
@@ -80,37 +85,14 @@
             margin: 5px 1%;
         }
         .pdf-container {
-            display: none;
             width: 100%;
             height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
             background-color: #f9f6f2;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
         }
         .pdf-container iframe {
             width: 100%;
             height: 100%;
             border: none;
-        }
-        .back-button {
-            margin: 10px;
-            padding: 10px;
-            background-color: #ffffff;
-            color: #333;
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 16px;
-            border: 1px solid #e0e0e0;
-            cursor: pointer;
-            text-align: center;
-        }
-        .back-button:hover {
-            background-color: #f0f0f0;
-            border-color: #ccc;
         }
         @media (max-width: 600px) {
             h1 {
@@ -123,14 +105,11 @@
                 width: 100%;
                 margin: 5px 0;
             }
-            .pdf-container iframe {
-                height: 100%;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="container" id="mainContainer">
+    <div class="container">
         <div class="logo">
             <img src="logo.png" alt="Logo">
         </div>
@@ -153,14 +132,12 @@
     </div>
     <div class="pdf-container" id="pdfContainer">
         <iframe id="pdfIframe" src=""></iframe>
-        <button class="back-button" id="backButton">Back</button>
     </div>
     <script>
         const buttons = document.querySelectorAll('.button');
-        const pdfContainer = document.getElementById('pdfContainer');
         const pdfIframe = document.getElementById('pdfIframe');
-        const mainContainer = document.getElementById('mainContainer');
-        const backButton = document.getElementById('backButton');
+        const mainContainer = document.querySelector('.container');
+        const pdfContainer = document.getElementById('pdfContainer');
 
         buttons.forEach(button => {
             button.addEventListener('click', (event) => {
@@ -168,14 +145,8 @@
                 const file = button.getAttribute('data-file');
                 pdfIframe.src = file;
                 mainContainer.style.display = 'none';
-                pdfContainer.style.display = 'flex';
+                pdfContainer.style.display = 'block';
             });
-        });
-
-        backButton.addEventListener('click', () => {
-            mainContainer.style.display = 'block';
-            pdfContainer.style.display = 'none';
-            pdfIframe.src = '';
         });
     </script>
 </body>
