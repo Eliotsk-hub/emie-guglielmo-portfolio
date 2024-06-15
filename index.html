@@ -14,22 +14,19 @@
     <meta name="msapplication-config" content="browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <style>
-        body {
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
         }
         .container {
             background-color: #f9f6f2;
             padding: 20px;
             max-width: 600px;
-            width: 100%;
+            margin: 0 auto;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: left;
@@ -73,7 +70,6 @@
             background-color: #f0f0f0;
             border-color: #ccc;
         }
-
         .bottom-buttons {
             text-align: center;
             display: flex;
@@ -83,7 +79,32 @@
             width: 48%;
             margin: 5px 1%;
         }
-
+        .pdf-container {
+            width: 100%;
+            height: 100vh;
+            background-color: #f9f6f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .pdf-container embed {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+        .loading-spinner, .error-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        .loading-spinner {
+            color: #333;
+        }
+        .error-message {
+            color: red;
+        }
         @media (max-width: 600px) {
             h1 {
                 font-size: 20px;
@@ -95,6 +116,9 @@
                 width: 100%;
                 margin: 5px 0;
             }
+            .pdf-container embed {
+                height: 100%;
+            }
         }
     </style>
 </head>
@@ -105,18 +129,18 @@
         </div>
         <h1>EMIE GUGLIELMO</h1>
         <div class="button-container">
-            <a href="viewer.html?file=https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/analyse_compressed.pdf?alt=media&token=cdfd0a02-6133-448b-8173-b3bb1b05e538" class="button">ANALYSE</a>
-            <a href="viewer.html?file=https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/demarche_creative_compressed.pdf?alt=media&token=9f4c84d3-5c2a-4532-8112-2c77f98fbf9a" class="button">I – DÉMARCHE CRÉATIVE</a>
-            <a href="viewer.html?file=https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/design_compressed.pdf?alt=media&token=e91fb426-183f-49d7-b225-b004878839f0" class="button">II – DESIGN</a>
-            <a href="viewer.html?file=https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/aps_compressed.pdf?alt=media&token=8b3d0566-b8c5-45fb-a3a9-8a8ed8dbf8c9" class="button">III – APS</a>
-            <a href="viewer.html?file=https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/apd_compressed.pdf?alt=media&token=7758f95e-cb0b-4bcf-9494-b95b0c3da65d" class="button">IV – APD</a>
-            <a href="viewer.html?file=https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/ape_compressed.pdf?alt=media&token=01fe29b7-1220-40df-bfe8-5740e9ba2edf" class="button">V – APE</a>
-            <a href="viewer.html?file=pdfs/pieces_ecrites.pdf" class="button">VI – PIÈCES ÉCRITES</a>
-            <a href="viewer.html?file=pdfs/maquettes.pdf" class="button">VII – MAQUETTES</a>
-            <a href="viewer.html?file=https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/visuel_3d_compressed.pdf?alt=media&token=0b7794e6-9f08-4637-b81d-39bff66ff2ad"class="button">VIII – VISUELS 3D</a>
+            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/analyse_compressed.pdf?alt=media&token=cdfd0a02-6133-448b-8173-b3bb1b05e538" class="button" target="_blank">ANALYSE</a>
+            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/demarche_creative_compressed.pdf?alt=media&token=9f4c84d3-5c2a-4532-8112-2c77f98fbf9a" class="button" target="_blank">I – DÉMARCHE CRÉATIVE</a>
+            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/design_compressed.pdf?alt=media&token=e91fb426-183f-49d7-b225-b004878839f0" class="button" target="_blank">II – DESIGN</a>
+            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/aps_compressed.pdf?alt=media&token=8b3d0566-b8c5-45fb-a3a9-8a8ed8dbf8c9" class="button" target="_blank">III – APS</a>
+            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/apd_compressed.pdf?alt=media&token=7758f95e-cb0b-4bcf-9494-b95b0c3da65d" class="button" target="_blank">IV – APD</a>
+            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/ape_compressed.pdf?alt=media&token=01fe29b7-1220-40df-bfe8-5740e9ba2edf" class="button" target="_blank">V – APE</a>
+            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/pieces_ecrites_compressed.pdf?alt=media&token=sample-token" class="button" target="_blank">VI – PIÈCES ÉCRITES</a>
+            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/maquettes_compressed.pdf?alt=media&token=sample-token" class="button" target="_blank">VII – MAQUETTES</a>
+            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/visuel_3d_compressed.pdf?alt=media&token=0b7794e6-9f08-4637-b81d-39bff66ff2ad" class="button" target="_blank">VIII – VISUELS 3D</a>
             <div class="bottom-buttons">
-                <a href="viewer.html?file=pdfs/panneau_a0.pdf" class="button">PANNEAU A0</a>
-                <a href="viewer.html?file=pdfs/presentation_oral.pdf" class="button">PRÉSENTATION ORAL</a>
+                <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/panneau_a0_compressed.pdf?alt=media&token=sample-token" class="button" target="_blank">PANNEAU A0</a>
+                <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/presentation_oral_compressed.pdf?alt=media&token=sample-token" class="button" target="_blank">PRÉSENTATION ORAL</a>
             </div>
         </div>
     </div>
