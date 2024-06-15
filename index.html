@@ -65,6 +65,7 @@
             font-size: 16px;
             border: 1px solid #e0e0e0;
             transition: background-color 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
         }
         .button:hover {
             background-color: #f0f0f0;
@@ -83,27 +84,31 @@
             width: 100%;
             height: 100vh;
             background-color: #f9f6f2;
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
-        .pdf-container embed {
+        .pdf-container iframe {
             width: 100%;
             height: 100vh;
             border: none;
         }
-        .loading-spinner, .error-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: none;
-        }
-        .loading-spinner {
+        .back-button {
+            margin: 10px;
+            padding: 10px;
+            background-color: #ffffff;
             color: #333;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 16px;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+            text-align: center;
         }
-        .error-message {
-            color: red;
+        .back-button:hover {
+            background-color: #f0f0f0;
+            border-color: #ccc;
         }
         @media (max-width: 600px) {
             h1 {
@@ -116,33 +121,53 @@
                 width: 100%;
                 margin: 5px 0;
             }
-            .pdf-container embed {
+            .pdf-container iframe {
                 height: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="mainContainer">
         <div class="logo">
             <img src="logo.png" alt="Logo">
         </div>
         <h1>EMIE GUGLIELMO</h1>
         <div class="button-container">
-            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/flattened_compressed_analyse.pdf?alt=media&token=58635ad5-d98a-46b3-9a6a-1c6f13eae44e" class="button" >ANALYSE</a>
-            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/flattened_compressed_demarche_creative.pdf?alt=media&token=5b82158b-d86c-47a9-8b02-90ec33c1d4f8" class="button" >I – DÉMARCHE CRÉATIVE</a>
-            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/flattened_compressed_design.pdf?alt=media&token=ecc74f4c-8acf-4b4d-a1d7-d796db2efaa6" class="button" >II – DESIGN</a>
-            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/flattened_compressed_aps.pdf?alt=media&token=f5b2fa54-6c92-423b-9e7b-f176781e2d39" class="button" >III – APS</a>
-            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/flattened_compressed_apd.pdf?alt=media&token=1ed8fff4-ff5f-4c5d-b0b9-445cea942531" class="button" >IV – APD</a>
-            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/flattened_compressed_ape.pdf?alt=media&token=764cfd7b-0edd-4a97-96ef-c4c4c2c7a244" class="button" >V – APE</a>
-            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/pieces_ecrites_compressed.pdf?alt=media&token=sample-token" class="button" >VI – PIÈCES ÉCRITES</a>
-            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/maquettes_compressed.pdf?alt=media&token=sample-token" class="button" >VII – MAQUETTES</a>
-            <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/flattened_compressed_visuel_3d.pdf?alt=media&token=1b438a02-5614-4342-bbe5-0f31dce83a41" class="button" >VIII – VISUELS 3D</a>
+            <div class="button" data-pdf="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/flattened_compressed_analyse.pdf?alt=media&token=58635ad5-d98a-46b3-9a6a-1c6f13eae44e">ANALYSE</div>
+            <div class="button" data-pdf="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/flattened_compressed_demarche_creative.pdf?alt=media&token=5b82158b-d86c-47a9-8b02-90ec33c1d4f8">I – DÉMARCHE CRÉATIVE</div>
+            <div class="button" data-pdf="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/flattened_compressed_design.pdf?alt=media&token=ecc74f4c-8acf-4b4d-a1d7-d796db2efaa6">II – DESIGN</div>
+            <div class="button" data-pdf="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/flattened_compressed_aps.pdf?alt=media&token=f5b2fa54-6c92-423b-9e7b-f176781e2d39">III – APS</div>
+            <div class="button" data-pdf="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/flattened_compressed_apd.pdf?alt=media&token=1ed8fff4-ff5f-4c5d-b0b9-445cea942531">IV – APD</div>
+            <div class="button" data-pdf="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/flattened_compressed_ape.pdf?alt=media&token=764cfd7b-0edd-4a97-96ef-c4c4c2c7a244">V – APE</div>
+            <div class="button" data-pdf="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/pieces_ecrites_compressed.pdf?alt=media&token=sample-token">VI – PIÈCES ÉCRITES</div>
+            <div class="button" data-pdf="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/maquettes_compressed.pdf?alt=media&token=sample-token">VII – MAQUETTES</div>
+            <div class="button" data-pdf="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/flattened_compressed_visuel_3d.pdf?alt=media&token=1b438a02-5614-4342-bbe5-0f31dce83a41">VIII – VISUELS 3D</div>
             <div class="bottom-buttons">
-                <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/panneau_a0_compressed.pdf?alt=media&token=sample-token" class="button" >PANNEAU A0</a>
-                <a href="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/presentation_oral_compressed.pdf?alt=media&token=sample-token" class="button" >PRÉSENTATION ORAL</a>
+                <div class="button" data-pdf="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/panneau_a0_compressed.pdf?alt=media&token=sample-token">PANNEAU A0</div>
+                <div class="button" data-pdf="https://firebasestorage.googleapis.com/v0/b/emie-projet.appspot.com/o/presentation_oral_compressed.pdf?alt=media&token=sample-token">PRÉSENTATION ORAL</div>
             </div>
         </div>
     </div>
+    <div class="pdf-container" id="pdfContainer">
+        <iframe id="pdfIframe"></iframe>
+        <button class="back-button" id="backButton">Back</button>
+        
+    </div>
+    <script>
+        document.querySelectorAll('.button').forEach(button => {
+            button.addEventListener('click', () => {
+                const pdfUrl = button.getAttribute('data-pdf');
+                document.getElementById('pdfIframe').src = pdfUrl;
+                document.getElementById('mainContainer').style.display = 'none';
+                document.getElementById('pdfContainer').style.display = 'flex';
+            });
+        });
+        document.getElementById('backButton').addEventListener('click', () => {
+            document.getElementById('mainContainer').style.display = 'block';
+            document.getElementById('pdfContainer').style.display = 'none';
+            document.getElementById('pdfIframe').src = '';
+        });
+    </script>
 </body>
 </html>
