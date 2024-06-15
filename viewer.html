@@ -66,7 +66,7 @@
         const pdfIframe = document.getElementById('pdfIframe');
 
         if (file) {
-            pdfIframe.src = `https://drive.google.com/viewerng/viewer?embedded=true&url=${file}`;
+            pdfIframe.src = `https://docs.google.com/gview?url=${file}&embedded=true`;
         } else {
             document.body.innerHTML = '<p>No PDF file specified.</p>';
         }
