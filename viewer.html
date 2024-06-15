@@ -19,83 +19,57 @@
             padding: 0;
             height: 100%;
             width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
         }
-        .container {
-            position: relative;
-            height: 100%;
-            width: 100%;
+        .pdf-container {
+            flex-grow: 1;
             background-color: #f9f6f2;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
         }
-        iframe {
-            border: none;
-            height: 100%;
+        .pdf-container iframe {
             width: 100%;
-            transform: scale(1); /* Ensure the iframe is not scaled */
-            transform-origin: top left; /* Set the transform origin */
+            height: 100%;
+            border: none;
         }
-        .loading-spinner, .error-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: none;
-        }
-        .loading-spinner {
+        .back-button {
+            margin: 10px;
+            padding: 10px;
+            background-color: #ffffff;
             color: #333;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 16px;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+            text-align: center;
         }
-        .error-message {
-            color: red;
-        }
-        /* Mobile Styles */
-        @media (max-width: 600px) {
-            body, html, .container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            iframe {
-                height: 100%; /* Use full height */
-                width: 100%; /* Use full width */
-                transform: none; /* Ensure no scaling */
-            }
+        .back-button:hover {
+            background-color: #f0f0f0;
+            border-color: #ccc;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <iframe id="pdfViewer" src=""></iframe>
-        <div class="loading-spinner" id="loadingSpinner">Loading...</div>
-        <div class="error-message" id="errorMessage">Failed to load PDF. Please try again later.</div>
+    <div class="pdf-container">
+        <iframe id="pdfIframe" src=""></iframe>
     </div>
+    <button class="back-button" onclick="window.history.back()">Back</button>
     <script>
         const params = new URLSearchParams(window.location.search);
         const file = params.get('file');
-        const pdfViewer = document.getElementById('pdfViewer');
-        const loadingSpinner = document.getElementById('loadingSpinner');
-        const errorMessage = document.getElementById('errorMessage');
+        const pdfIframe = document.getElementById('pdfIframe');
 
         if (file) {
-            pdfViewer.src = file;
-            pdfViewer.onload = () => {
-                loadingSpinner.style.display = 'none';
-            };
-            pdfViewer.onerror = () => {
-                loadingSpinner.style.display = 'none';
-                errorMessage.style.display = 'block';
-            };
+            pdfIframe.src = file;
         } else {
             document.body.innerHTML = '<p>No PDF file specified.</p>';
         }
-
-        loadingSpinner.style.display = 'block';
     </script>
 </body>
 </html>
