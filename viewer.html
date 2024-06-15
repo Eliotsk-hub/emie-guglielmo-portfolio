@@ -39,6 +39,8 @@
             border: none;
             height: 100%;
             width: 100%;
+            transform: scale(1); /* Ensure the iframe is not scaled */
+            transform-origin: top left; /* Set the transform origin */
         }
         .loading-spinner, .error-message {
             position: absolute;
@@ -60,7 +62,9 @@
                 align-items: flex-start;
             }
             iframe {
-                height: calc(100% - 40px); /* Adjust height to allow space for potential margins or other elements */
+                height: 100%; /* Use full height */
+                width: 100%; /* Use full width */
+                transform: none; /* Ensure no scaling */
             }
         }
     </style>
