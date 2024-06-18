@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +19,7 @@
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
@@ -73,7 +74,6 @@
             background-color: #f0f0f0;
             border-color: #ccc;
         }
-
         .bottom-buttons {
             text-align: center;
             display: flex;
@@ -82,20 +82,6 @@
         .bottom-buttons .button {
             width: 48%;
             margin: 5px 1%;
-        }
-
-        #pdf-container {
-            width: 100%;
-            height: 100vh;
-            overflow: auto;
-            background-color: #fff;
-            display: none;
-        }
-
-        .page {
-            width: 100%;
-            height: auto;
-            margin-bottom: 20px;
         }
 
         @media (max-width: 600px) {
@@ -109,18 +95,8 @@
                 width: 100%;
                 margin: 5px 0;
             }
-
-            #pdf-container {
-                height: 100%;
-            }
-
-            .page {
-                width: 100%;
-                height: auto;
-            }
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -129,81 +105,20 @@
         </div>
         <h1>EMIE GUGLIELMO</h1>
         <div class="button-container">
-            <a href="#" class="button" onclick="openPDF('pdfs/analyse.pdf')">ANALYSE</a>
-            <a href="#" class="button" onclick="openPDF('pdfs/demarche_creative.pdf')">I – DÉMARCHE CRÉATIVE</a>
-            <a href="#" class="button" onclick="openPDF('pdfs/design.pdf')">II – DESIGN</a>
-            <a href="#" class="button" onclick="openPDF('pdfs/aps.pdf')">III – APS</a>
-            <a href="#" class="button" onclick="openPDF('pdfs/apd.pdf')">IV – APD</a>
-            <a href="#" class="button" onclick="openPDF('pdfs/ape.pdf')">V – APE</a>
-            <a href="#" class="button" onclick="openPDF('pdfs/pieces_ecrites.pdf')">VI – PIÈCES ÉCRITES</a>
-            <a href="#" class="button" onclick="openPDF('pdfs/maquettes.pdf')">VII – MAQUETTES</a>
-            <a href="#" class="button" onclick="openPDF('pdfs/visuel_3d.pdf')">VIII – VISUELS 3D</a>
+            <a href="pdfs/analyse.pdf" class="button" target="_blank" loading="lazy">ANALYSE</a>
+            <a href="pdfs/demarche_creative.pdf" class="button" target="_blank" loading="lazy">I – DÉMARCHE CRÉATIVE</a>
+            <a href="pdfs/design.pdf" class="button" target="_blank" loading="lazy">II – DESIGN</a>
+            <a href="pdfs/aps.pdf" class="button" target="_blank" loading="lazy">III – APS</a>
+            <a href="pdfs/apd.pdf" class="button" target="_blank" loading="lazy">IV – APD</a>
+            <a href="pdfs/ape.pdf" class="button" target="_blank" loading="lazy">V – APE</a>
+            <a href="pdfs/pieces_ecrites.pdf" class="button" target="_blank" loading="lazy">VI – PIÈCES ÉCRITES</a>
+            <a href="pdfs/maquettes.pdf" class="button" target="_blank" loading="lazy">VII – MAQUETTES</a>
+            <a href="pdfs/visuel_3d.pdf" class="button" target="_blank" loading="lazy">VIII – VISUELS 3D</a>
             <div class="bottom-buttons">
-                <a href="#" class="button" onclick="openPDF('pdfs/panneau_a0.pdf')">PANNEAU A0</a>
-                <a href="#" class="button" onclick="openPDF('pdfs/presentation_oral.pdf')">PRÉSENTATION ORAL</a>
+                <a href="pdfs/panneau_a0.pdf" class="button" target="_blank" loading="lazy">PANNEAU A0</a>
+                <a href="pdfs/presentation_oral.pdf" class="button" target="_blank" loading="lazy">PRÉSENTATION ORAL</a>
             </div>
         </div>
     </div>
-    <div id="pdf-container"></div>
-
-    <script>
-        var pdfjsLib = window['pdfjs-dist/build/pdf'];
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.worker.min.js';
-
-        function openPDF(url) {
-            var loadingTask = pdfjsLib.getDocument(url);
-            loadingTask.promise.then(function(pdf) {
-                console.log('PDF loaded');
-
-                var pdfContainer = document.getElementById('pdf-container');
-                pdfContainer.innerHTML = '';
-                pdfContainer.style.display = 'block';
-
-                for (var pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
-                    var canvasWrapper = document.createElement('div');
-                    canvasWrapper.classList.add('page');
-                    canvasWrapper.dataset.pageNumber = pageNumber;
-                    pdfContainer.appendChild(canvasWrapper);
-                }
-
-                var observer = new IntersectionObserver(function(entries, observer) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting) {
-                            var pageNumber = entry.target.dataset.pageNumber;
-                            pdf.getPage(pageNumber).then(function(page) {
-                                var scale = 1.5;  // Adjust scale for larger PDFs like A1
-                                var viewport = page.getViewport({ scale: scale });
-
-                                var canvas = document.createElement('canvas');
-                                var context = canvas.getContext('2d');
-                                canvas.height = viewport.height;
-                                canvas.width = viewport.width;
-
-                                var renderContext = {
-                                    canvasContext: context,
-                                    viewport: viewport
-                                };
-                                page.render(renderContext).promise.then(function() {
-                                    console.log('Page rendered');
-                                });
-
-                                entry.target.appendChild(canvas);
-                                observer.unobserve(entry.target);
-                            });
-                        }
-                    });
-                }, { rootMargin: '0px 0px 200px 0px' });
-
-                document.querySelectorAll('.page').forEach(function(page) {
-                    observer.observe(page);
-                });
-
-                // Scroll to PDF container
-                pdfContainer.scrollIntoView({ behavior: 'smooth' });
-            }, function(reason) {
-                console.error(reason);
-            });
-        }
-    </script>
 </body>
 </html>
