@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,7 +83,6 @@
             width: 48%;
             margin: 5px 1%;
         }
-
         @media (max-width: 600px) {
             h1 {
                 font-size: 20px;
@@ -95,19 +95,6 @@
                 margin: 5px 0;
             }
         }
-
-        /* Additional styles for PDF container */
-        .pdf-container {
-            width: 100%;
-            height: 100vh;
-            overflow-y: auto;
-            background-color: #fff;
-        }
-        #pdf-viewer {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
     </style>
 </head>
 <body>
@@ -117,50 +104,22 @@
         </div>
         <h1>EMIE GUGLIELMO</h1>
         <div class="button-container">
-            <a data-src="pdfs/analyse.pdf" class="button" onclick="loadPDF('pdfs/analyse.pdf')">ANALYSE</a>
-            <a data-src="pdfs/demarche_creative.pdf" class="button" onclick="loadPDF('pdfs/demarche_creative.pdf')">I – DÉMARCHE CRÉATIVE</a>
-            <a data-src="pdfs/design.pdf" class="button" onclick="loadPDF('pdfs/design.pdf')">II – DESIGN</a>
-            <a data-src="pdfs/aps.pdf" class="button" onclick="loadPDF('pdfs/aps.pdf')">III – APS</a>
-            <a data-src="pdfs/apd.pdf" class="button" onclick="loadPDF('pdfs/apd.pdf')">IV – APD</a>
-            <a data-src="pdfs/ape.pdf" class="button" onclick="loadPDF('pdfs/ape.pdf')">V – APE</a>
-            <a data-src="pdfs/pieces_ecrites.pdf" class="button" onclick="loadPDF('pdfs/pieces_ecrites.pdf')">VI – PIÈCES ÉCRITES</a>
-            <a data-src="pdfs/maquettes.pdf" class="button" onclick="loadPDF('pdfs/maquettes.pdf')">VII – MAQUETTES</a>
-            <a data-src="pdfs/visuel_3d.pdf" class="button" onclick="loadPDF('pdfs/visuel_3d.pdf')">VIII – VISUELS 3D</a>
+            <a href="pdfs/analyse.pdf" class="button">ANALYSE</a>
+            <a href="pdfs/demarche_creative.pdf" class="button">I – DÉMARCHE CRÉATIVE</a>
+            <a href="pdfs/design.pdf" class="button">II – DESIGN</a>
+            <a href="pdfs/aps.pdf" class="button">III – APS</a>
+            <a href="pdfs/apd.pdf" class="button">IV – APD</a>
+            <a href="pdfs/ape.pdf" class="button">V – APE</a>
+            <a href="pdfs/pieces_ecrites.pdf" class="button">VI – PIÈCES ÉCRITES</a>
+            <a href="pdfs/maquettes.pdf" class="button">VII – MAQUETTES</a>
+            <a href="pdfs/visuel_3d.pdf" class="button">VIII – VISUELS 3D</a>
+            <a href="pdfs/video.mp4" class="button"> VIDEO 3D</a>
             <div class="bottom-buttons">
-                <a data-src="pdfs/panneau_a0.pdf" class="button" onclick="loadPDF('pdfs/panneau_a0.pdf')">PANNEAU A0</a>
-                <a data-src="pdfs/presentation_oral.pdf" class="button" onclick="loadPDF('pdfs/presentation_oral.pdf')">PRÉSENTATION ORAL</a>
+                <a href="pdfs/panneau_a0.pdf" class="button">PANNEAU A0</a>
+                <a href="pdfs/presentation_oral.pdf" class="button">PRÉSENTATION ORAL</a>
             </div>
+            
         </div>
     </div>
-
-    <div class="pdf-container" id="pdf-container" style="display:none;">
-        <iframe id="pdf-viewer"></iframe>
-    </div>
-
-    <script>
-        function loadPDF(pdfUrl) {
-            const pdfContainer = document.getElementById('pdf-container');
-            const pdfViewer = document.getElementById('pdf-viewer');
-
-            // Hide the container and reset the iframe src
-            pdfContainer.style.display = 'none';
-            pdfViewer.src = '';
-
-            // Show a loading message or spinner
-            const loadingMessage = document.createElement('div');
-            loadingMessage.id = 'loading-message';
-            loadingMessage.style.textAlign = 'center';
-            loadingMessage.style.padding = '20px';
-            loadingMessage.innerText = 'Loading PDF...';
-            pdfContainer.appendChild(loadingMessage);
-
-            // Lazy load the PDF
-            setTimeout(() => {
-                pdfViewer.src = pdfUrl;
-                pdfContainer.style.display = 'block';
-                loadingMessage.remove();
-            }, 100);
-        }
-    </script>
 </body>
 </html>
