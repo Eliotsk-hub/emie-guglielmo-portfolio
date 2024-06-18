@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -105,20 +104,44 @@
         </div>
         <h1>EMIE GUGLIELMO</h1>
         <div class="button-container">
-            <a href="pdfs/analyse.pdf" class="button" target="_blank" loading="lazy">ANALYSE</a>
-            <a href="pdfs/demarche_creative.pdf" class="button" target="_blank" loading="lazy">I – DÉMARCHE CRÉATIVE</a>
-            <a href="pdfs/design.pdf" class="button" target="_blank" loading="lazy">II – DESIGN</a>
-            <a href="pdfs/aps.pdf" class="button" target="_blank" loading="lazy">III – APS</a>
-            <a href="pdfs/apd.pdf" class="button" target="_blank" loading="lazy">IV – APD</a>
-            <a href="pdfs/ape.pdf" class="button" target="_blank" loading="lazy">V – APE</a>
-            <a href="pdfs/pieces_ecrites.pdf" class="button" target="_blank" loading="lazy">VI – PIÈCES ÉCRITES</a>
-            <a href="pdfs/maquettes.pdf" class="button" target="_blank" loading="lazy">VII – MAQUETTES</a>
-            <a href="pdfs/visuel_3d.pdf" class="button" target="_blank" loading="lazy">VIII – VISUELS 3D</a>
+            <a data-src="pdfs/analyse.pdf" class="button">ANALYSE</a>
+            <a data-src="pdfs/demarche_creative.pdf" class="button">I – DÉMARCHE CRÉATIVE</a>
+            <a data-src="pdfs/design.pdf" class="button">II – DESIGN</a>
+            <a data-src="pdfs/aps.pdf" class="button">III – APS</a>
+            <a data-src="pdfs/apd.pdf" class="button">IV – APD</a>
+            <a data-src="pdfs/ape.pdf" class="button">V – APE</a>
+            <a data-src="pdfs/pieces_ecrites.pdf" class="button">VI – PIÈCES ÉCRITES</a>
+            <a data-src="pdfs/maquettes.pdf" class="button">VII – MAQUETTES</a>
+            <a data-src="pdfs/visuel_3d.pdf" class="button">VIII – VISUELS 3D</a>
             <div class="bottom-buttons">
-                <a href="pdfs/panneau_a0.pdf" class="button" target="_blank" loading="lazy">PANNEAU A0</a>
-                <a href="pdfs/presentation_oral.pdf" class="button" target="_blank" loading="lazy">PRÉSENTATION ORAL</a>
+                <a data-src="pdfs/panneau_a0.pdf" class="button">PANNEAU A0</a>
+                <a data-src="pdfs/presentation_oral.pdf" class="button">PRÉSENTATION ORAL</a>
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const observerOptions = {
+                root: null,
+                rootMargin: "0px",
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const link = entry.target;
+                        link.href = link.getAttribute('data-src');
+                        link.setAttribute('target', '_blank');
+                        observer.unobserve(link);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.button').forEach(button => {
+                observer.observe(button);
+            });
+        });
+    </script>
 </body>
 </html>
