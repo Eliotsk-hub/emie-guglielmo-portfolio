@@ -92,9 +92,10 @@
             display: none;
         }
 
-        canvas {
+        .page {
             width: 100%;
             height: auto;
+            margin-bottom: 20px;
         }
 
         @media (max-width: 600px) {
@@ -113,7 +114,7 @@
                 height: 100%;
             }
 
-            canvas {
+            .page {
                 width: 100%;
                 height: auto;
             }
@@ -159,28 +160,43 @@
                 pdfContainer.style.display = 'block';
 
                 for (var pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
-                    (function(pageNumber) {
-                        pdf.getPage(pageNumber).then(function(page) {
-                            var scale = 1.5;  // Adjust scale for larger PDFs like A1
-                            var viewport = page.getViewport({ scale: scale });
-
-                            var canvas = document.createElement('canvas');
-                            var context = canvas.getContext('2d');
-                            canvas.height = viewport.height;
-                            canvas.width = viewport.width;
-
-                            var renderContext = {
-                                canvasContext: context,
-                                viewport: viewport
-                            };
-                            page.render(renderContext).promise.then(function() {
-                                console.log('Page rendered');
-                            });
-
-                            pdfContainer.appendChild(canvas);
-                        });
-                    })(pageNumber);
+                    var canvasWrapper = document.createElement('div');
+                    canvasWrapper.classList.add('page');
+                    canvasWrapper.dataset.pageNumber = pageNumber;
+                    pdfContainer.appendChild(canvasWrapper);
                 }
+
+                var observer = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            var pageNumber = entry.target.dataset.pageNumber;
+                            pdf.getPage(pageNumber).then(function(page) {
+                                var scale = 1.5;  // Adjust scale for larger PDFs like A1
+                                var viewport = page.getViewport({ scale: scale });
+
+                                var canvas = document.createElement('canvas');
+                                var context = canvas.getContext('2d');
+                                canvas.height = viewport.height;
+                                canvas.width = viewport.width;
+
+                                var renderContext = {
+                                    canvasContext: context,
+                                    viewport: viewport
+                                };
+                                page.render(renderContext).promise.then(function() {
+                                    console.log('Page rendered');
+                                });
+
+                                entry.target.appendChild(canvas);
+                                observer.unobserve(entry.target);
+                            });
+                        }
+                    });
+                }, { rootMargin: '0px 0px 200px 0px' });
+
+                document.querySelectorAll('.page').forEach(function(page) {
+                    observer.observe(page);
+                });
 
                 // Scroll to PDF container
                 pdfContainer.scrollIntoView({ behavior: 'smooth' });
